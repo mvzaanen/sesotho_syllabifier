@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""convert.py
+"""syllabifier.py
 
 This program takes a file containing a list of words (one per line) as
 input.  It writes syllabified versions of the words to output.  The
