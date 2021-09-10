@@ -10,13 +10,31 @@ import argparse
 import logging
 import re
 
+def is_vowel(letter):
+    """This function returns true if the letter is a vowel."""
+    return letter in "aeiou"
+
+def direct_vowel_left(word, index):
+    """This example rule needs to be replaced by a proper rule."""
+    return is_vowel(word[index - 1])
 
 def syllabify(word):
     """Apply syllabification to the word and return the syllabified
     word (syllable boundaries indicated by -).
     """
     logging.debug("Syllabifying " + word)
-    return word
+    # For each index in between letters starting from position 1 until the place
+    # before the last letter, check if a syllable boundary can be placed there.
+    # index indicates the position between letters, so if the word is abcde,
+    # index 1 is between a and b.
+    syllabified_word = word[0] # Store the first letter as there is never a syllable boundary before the first letter
+    for index in range(1, len(word) - 1):
+        # This is just an example rule, this needs to be replaced with proper
+        # rules.
+        if direct_vowel_left(word, index):
+            syllabified_word += "-"
+        syllabified_word += word[index]
+    return syllabified_word
 
 
 
