@@ -59,7 +59,11 @@ def C_rule(word, index):
 
 def CV_rule(word, index):
     # RULE: if there is a vowel and one or more consonants before it then it is a syllable
-    return False
+    # index - 1 is the letter before the position where the syllable
+    # boundary may be set
+    # Check that the index is larger than one, so we also properly
+    # check for the consonant
+    return index > 1 and is_vowel(word[index - 1]) and is_consonant(word[index - 2])
 
 
 def syllabify(word):
