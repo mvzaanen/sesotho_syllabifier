@@ -10,13 +10,57 @@ import argparse
 import logging
 import re
 
+# Functions for checking properties of letters (or combinations of
+# letters)
+
 def is_vowel(letter):
     """This function returns true if the letter is a vowel."""
     return letter in "aeiou"
 
-def direct_vowel_left(word, index):
-    """This example rule needs to be replaced by a proper rule."""
-    return is_vowel(word[index - 1])
+def is_consonant(letter):
+    """This function returns true if the letter is a consonant."""
+    return letter in "bcdfghjklmnpqrstvwxz"
+
+def is_nasal_or_l(letter1, letter2):
+    """This function returns true if the letter2 is a nasal consonant
+    or /l/. Letter1 is checked in the ng, ny, cases"""
+    if letter2 in "nm": # check single nasals
+        return True
+    elif letter2 in "l": # check l
+        return True
+    elif letter2 in "gy" and letter1 == "n": # check complex nasals
+        return True
+    return False
+
+
+# Syllable rules
+
+def Vi_rule(word, index):
+    # i if we have a vowel at the beginning of the word, then it is a syllable
+    return False
+
+
+def Vii_rule(word, index):
+    # ii if we have multiple vowels in a row, the last one will be a syllable
+    return False
+
+
+def V_rule(word, index):
+    # i if we have a vowel at the beginning of the word, then it is a syllable
+    # ii if we have multiple vowels in a row, the last one will be a syllable
+    # iii similar to V ii (so there is no need to implement this explicitly)
+    return Vi_rule(word, index) or Vii_rule(word, index)
+
+
+def C_rule(word, index):
+    # RULE: if we have one of the four nasal consonants or the /l/ followed by another consonant (looking to the right of the position) then it is a syllable
+    return False
+
+
+def CV_rule(word, index):
+    # RULE: if there is a vowel and one or more consonants before it then it is a syllable
+    return False
+
 
 def syllabify(word):
     """Apply syllabification to the word and return the syllabified
@@ -29,9 +73,10 @@ def syllabify(word):
     # index 1 is between a and b.
     syllabified_word = word[0] # Store the first letter as there is never a syllable boundary before the first letter
     for index in range(1, len(word) - 1):
-        # This is just an example rule, this needs to be replaced with proper
-        # rules.
-        if direct_vowel_left(word, index):
+        # This tests all the rules in order.  If one of the rules
+        # returns true (i.e., matches), then a syllable boundary is
+        # found.
+        if V_rule(word, index) or C_rule(word, index) or CV_rule(word, index):
             syllabified_word += "-"
         syllabified_word += word[index]
     return syllabified_word
@@ -74,7 +119,7 @@ def main():
 
 
     for word in fp_input:  # Simply read a line from fp_input
-        syl_word = syllabify(word)
+        syl_word = syllabify(word.rstrip()) # Syllabify and remove newline
         fp_output.write(syl_word)  # Write output to fp_output
 
 
