@@ -19,7 +19,7 @@ def is_vowel(letter):
 
 def is_consonant(letter):
     """This function returns true if the letter is a consonant."""
-    return letter in "bcdfghjklmnpqrstvwxz"
+    return letter in "bcdfghjklmnpqrstvwxyz"
 
 def is_nasal_or_l(letter1, letter2):
     """This function returns true if the letter2 is a nasal consonant
