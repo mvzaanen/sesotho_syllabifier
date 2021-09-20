@@ -37,12 +37,12 @@ def is_nasal_or_l(letter1, letter2):
 
 def Vi_rule(word, index):
     # i if we have a vowel at the beginning of the word, then it is a syllable
-    return False
+    return index > 1 and is_vowel(word[index 0])
 
 
 def Vii_rule(word, index):
     # ii if we have multiple vowels in a row, the last one will be a syllable
-    return False
+    return index > 1 and is_vowel(word[index - 1]) and is_vowel(word[index - 2])
 
 
 def V_rule(word, index):
