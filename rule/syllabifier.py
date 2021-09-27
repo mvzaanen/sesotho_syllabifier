@@ -54,7 +54,8 @@ def V_rule(word, index):
 
 def C_rule(word, index):
     # RULE: if we have one of the four nasal consonants or the /l/ followed by another consonant (looking to the right of the position) then it is a syllable
-    return False
+     print(word[index])
+     return False
 
 
 def CV_rule(word, index):
