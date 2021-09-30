@@ -21,17 +21,15 @@ def is_consonant(letter):
     """This function returns true if the letter is a consonant."""
     return letter in "bcdfghjklmnpqrstvwxyz"
 
-def is_nasal_or_l(letter1, letter2):
-    """This function returns true if the letter2 is a nasal consonant
-    or /l/. Letter1 is checked in the ng, ny, cases"""
-    if letter2 in "nm": # check single nasals
-        return True
-    elif letter2 in "l": # check l
-        return True
-    elif letter2 in "gy" and letter1 == "n": # check complex nasals
-        return True
-    return False
+def is_single_nasal_or_l(letter):
+    """This function returns true if the letter is a nasal consonant
+    or /l/."""
+    return letter in "nm" or letter == "l"
 
+def is_complex_nasal(letter1, letter2):
+    """This function returns true if the concatenation of letter1 and
+    letter2 are the ng, ny, cases"""
+    return letter1 == "n" and letter2 in "gy"
 
 # Syllable rules
 
