@@ -122,7 +122,7 @@ def main():
 
     for word in fp_input:  # Simply read a line from fp_input
         syl_word = syllabify(word.rstrip()) # Syllabify and remove newline
-        fp_output.write(syl_word)  # Write output to fp_output
+        fp_output.write(syl_word + "\n")  # Write output to fp_output
 
 
 if __name__ == '__main__':
