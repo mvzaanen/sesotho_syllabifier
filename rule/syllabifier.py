@@ -15,27 +15,25 @@ import re
 
 def is_vowel(letter):
     """This function returns true if the letter is a vowel."""
-    return letter in "aeiou"
+    return letter in "AaEeIiOoUu"
 
 def is_consonant(letter):
     """This function returns true if the letter is a consonant."""
-    return letter in "bcdfghjklmnpqrstvwxyz"
+    return letter in "BbCcDdFfHhJjKkLlMmNnPpQqRrSsTtVvXxZz"
 
-def is_single_nasal_or_l(letter):
-    """This function returns true if the letter is a nasal consonant
-    or /l/."""
-    return letter in "nm" or letter == "l"
+def is_single_nasal(letter):
+    """This function returns true if the letter is a nasal consonant"""
+    return letter in "NnMm"
 
-def is_complex_nasal(letter1, letter2):
-    """This function returns true if the concatenation of letter1 and
-    letter2 are the ng, ny, cases"""
-    return letter1 == "n" and letter2 in "gy"
+def is_letter_l(letter):
+    """This function returns true if the letter is (l)"""
+    return letter in "Ll"
 
 # Syllable rules
 
 def Vi_rule(word, index):
     # i if we have a vowel at the beginning of the word, then it is a syllable
-    return index == 1 and is_vowel(word[index - 1])
+    return is_vowel(word[index - 1])
 
 
 def Vii_rule(word, index):
@@ -50,9 +48,18 @@ def V_rule(word, index):
     return Vi_rule(word, index) or Vii_rule(word, index)
 
 
+def Ci_rule(word, index):
+    #RULE: if we have the letter /l/ followed by another, the first /l/ is a syllable
+    return is_letter_l(word[index - 1]) and is_letter_l(word[index])
+
+def Cii_rule(word, index):
+    #RULE: if we have one of the two nasals /mn/ followed by a consonant (looking to the right position) then it is a syllable
+    #The /gwy/ letters are excluded from this rule
+    return ((is_single_nasal(word[index - 1]) and is_consonant(word[index])))
+
 def C_rule(word, index):
     # RULE: if we have one of the four nasal consonants or the /l/ followed by another consonant (looking to the right of the position) then it is a syllable
-    return False
+    return Ci_rule(word, index) or Cii_rule(word, index)
 
 
 def CV_rule(word, index):
