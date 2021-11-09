@@ -93,6 +93,7 @@ def syllabify(word):
         if v_res or c_res or cv_res:
             syllabified_word += " "
         syllabified_word += word[index]
+    syllabified_word += word[len(word) - 1] # Add last letter
     return syllabified_word
 
 
