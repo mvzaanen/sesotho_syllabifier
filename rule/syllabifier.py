@@ -69,6 +69,8 @@ def syllabify(word):
     word (syllable boundaries indicated by -).
     """
     logging.debug("Syllabifying " + word)
+    if len(word) == 0:
+        return word
     # For each index in between letters starting from position 1 until the place
     # before the last letter, check if a syllable boundary can be placed there.
     # index indicates the position between letters, so if the word is abcde,
