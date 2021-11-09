@@ -15,21 +15,21 @@ import re
 
 def is_vowel(letter):
     """This function returns true if the letter is a vowel."""
-    return letter in "aeiou"
+    return letter.lower() in "aeiou"
 
 def is_consonant(letter):
     """This function returns true if the letter is a consonant."""
-    return letter in "bcdfghjklmnpqrstvwxyz"
+    return letter.lower() in "bcdfghjklmnpqrstvwxyz"
 
 def is_single_nasal_or_l(letter):
     """This function returns true if the letter is a nasal consonant
     or /l/."""
-    return letter in "nm" or letter == "l"
+    return letter.lower() in "nm" or letter.lower() == "l"
 
 def is_complex_nasal(letter1, letter2):
     """This function returns true if the concatenation of letter1 and
     letter2 are the ng, ny, cases"""
-    return letter1 == "n" and letter2 in "gy"
+    return letter1.lower() == "n" and letter2.lower() in "gy"
 
 # Syllable rules
 
