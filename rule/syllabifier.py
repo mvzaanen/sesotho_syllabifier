@@ -52,7 +52,7 @@ def V_rule(word, index):
 
 def C_rule(word, index):
     # RULE: if we have one of the four nasal consonants or the /l/ followed by another consonant (looking to the right of the position) then it is a syllable
-    return False
+    return is_single_nasal_or_l(word[index - 1]) and is_consonant(word[index])
 
 
 def CV_rule(word, index):
@@ -80,8 +80,18 @@ def syllabify(word):
         # This tests all the rules in order.  If one of the rules
         # returns true (i.e., matches), then a syllable boundary is
         # found.
-        if V_rule(word, index) or C_rule(word, index) or CV_rule(word, index):
-            syllabified_word += "-"
+        v_res = V_rule(word, index)
+        c_res = C_rule(word, index)
+        cv_res = CV_rule(word, index)
+        logging.debug("Considering index " + str(index))
+        if v_res:
+            logging.debug("V rule matched")
+        if c_res:
+            logging.debug("C rule matched")
+        if cv_res:
+            logging.debug("CV rule matched")
+        if v_res or c_res or cv_res:
+            syllabified_word += " "
         syllabified_word += word[index]
     return syllabified_word
 
