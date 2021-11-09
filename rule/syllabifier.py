@@ -52,7 +52,7 @@ def V_rule(word, index):
 
 def C_rule(word, index):
     # RULE: if we have one of the four nasal consonants or the /l/ followed by another consonant (looking to the right of the position) then it is a syllable
-    return is_single_nasal_or_l(word[index - 1]) and is_consonant(word[index])
+    return index > 1 and is_single_nasal_or_l(word[index - 2]) and is_consonant(word[index - 1])
 
 
 def CV_rule(word, index):
