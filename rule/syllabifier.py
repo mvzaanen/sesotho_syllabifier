@@ -66,7 +66,7 @@ def CV_rule(word, index):
 
 def syllabify(word):
     """Apply syllabification to the word and return the syllabified
-    word (syllable boundaries indicated by -).
+    word (syllable boundaries indicated by a space).
     """
     logging.debug("Syllabifying " + word)
     if len(word) <= 1:
