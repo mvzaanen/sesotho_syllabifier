@@ -43,7 +43,12 @@ def Vii_rule(word, index):
     # ii if we have multiple vowels in a row, the last one will be a syllable
     if index < 1 or index > len(word) - 1:
         return False
-    return index > 1 and is_vowel(word[index - 1]) and is_vowel(word[index - 2])
+    # check if we have at least two vowels before the possible break
+    # (index - 2 and index - 1) and check whether the next letter is
+    # not a vowel (as then it is not the last vowel in the row.
+    # Note that we can always check for the next letter as we test for
+    # index > len(word) - 1.
+    return index > 1 and is_vowel(word[index - 2]) and is_vowel(word[index - 1]) and not is_vowel(word[index])
 
 
 def V_rule(word, index):
