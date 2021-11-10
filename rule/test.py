@@ -90,7 +90,7 @@ class TestRules(unittest.TestCase):
         # extreme values of index
         self.assertFalse(syllabifier.Vi_rule("abc", 0))
         self.assertFalse(syllabifier.Vi_rule("abc", -1))
-        self.assertFalse(syllabifier.Vi_rule("abc", 5))
+        self.assertFalse(syllabifier.Vi_rule("aaa", 5))
 
     def test_Vii_rule(self):
         """
@@ -103,6 +103,7 @@ class TestRules(unittest.TestCase):
     def test_V_rule(self):
         """
         Test whether the V rule works correctly.
+        The V rule triggers if any of the Vi or Vii rules trigger.
         """
         pass
 
@@ -121,7 +122,20 @@ class TestRules(unittest.TestCase):
         CV indicates that if there is a vowel and one or more
         consonants before it then it is a syllable.
         """
-        pass
+        self.assertTrue(syllabifier.CV_rule("cabc", 2))
+        self.assertTrue(syllabifier.CV_rule("ccabc", 3))
+        self.assertTrue(syllabifier.CV_rule("ccab", 3))
+
+        self.assertFalse(syllabifier.CV_rule("abc", 1))
+        self.assertFalse(syllabifier.CV_rule("caa", 1))
+        self.assertFalse(syllabifier.CV_rule("aabc", 2))
+        self.assertFalse(syllabifier.CV_rule("cca", 2))
+        self.assertFalse(syllabifier.CV_rule("cca", 3))
+
+        # extreme values of index
+        self.assertFalse(syllabifier.CV_rule("bac", 0))
+        self.assertFalse(syllabifier.CV_rule("bac", -1))
+        self.assertFalse(syllabifier.CV_rule("bac", 5))
 
     def test_syllabify(self):
         """
