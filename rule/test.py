@@ -98,7 +98,22 @@ class TestRules(unittest.TestCase):
         Vii indicates that if we have multiple vowels in a row, the
         last one will be a syllable.
         """
-        pass
+        # test regular cases
+        self.assertTrue(syllabifier.Vii_rule("aac", 2))
+        self.assertTrue(syllabifier.Vii_rule("aaac", 3))
+        
+        # test beginning and middle vowels
+        self.assertFalse(syllabifier.Vii_rule("abc", 1))
+        self.assertFalse(syllabifier.Vii_rule("aaa", 1))
+        self.assertFalse(syllabifier.Vii_rule("aaa", 2))
+        self.assertFalse(syllabifier.Vii_rule("aaac", 2))
+        self.assertFalse(syllabifier.Vii_rule("aaaa", 2))
+        self.assertFalse(syllabifier.Vii_rule("aaaa", 3))
+
+        # extreme values of index
+        self.assertFalse(syllabifier.Vii_rule("aaa", 0))
+        self.assertFalse(syllabifier.Vii_rule("aaa", -1))
+        self.assertFalse(syllabifier.Vii_rule("aaa", 5))
 
     def test_V_rule(self):
         """
