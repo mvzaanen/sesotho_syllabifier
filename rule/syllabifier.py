@@ -35,11 +35,14 @@ def is_complex_nasal(letter1, letter2):
 
 def Vi_rule(word, index):
     # i if we have a vowel at the beginning of the word, then it is a syllable
+    # this only triggers with index == 1.
     return index == 1 and is_vowel(word[index - 1])
 
 
 def Vii_rule(word, index):
     # ii if we have multiple vowels in a row, the last one will be a syllable
+    if index < 1 or index > len(word) - 1:
+        return False
     return index > 1 and is_vowel(word[index - 1]) and is_vowel(word[index - 2])
 
 
@@ -47,11 +50,15 @@ def V_rule(word, index):
     # i if we have a vowel at the beginning of the word, then it is a syllable
     # ii if we have multiple vowels in a row, the last one will be a syllable
     # iii similar to V ii (so there is no need to implement this explicitly)
+    if index < 1 or index > len(word) - 1:
+        return False
     return Vi_rule(word, index) or Vii_rule(word, index)
 
 
 def C_rule(word, index):
     # RULE: if we have one of the four nasal consonants or the /l/ followed by another consonant (looking to the right of the position) then it is a syllable
+    if index < 1 or index > len(word) - 1:
+        return False
     return index > 1 and is_single_nasal_or_l(word[index - 2]) and is_consonant(word[index - 1])
 
 
@@ -61,6 +68,8 @@ def CV_rule(word, index):
     # boundary may be set
     # Check that the index is larger than one, so we also properly
     # check for the consonant
+    if index < 1 or index > len(word) - 1:
+        return False
     return index > 1 and is_vowel(word[index - 1]) and is_consonant(word[index - 2])
 
 
