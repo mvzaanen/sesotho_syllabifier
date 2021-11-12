@@ -129,7 +129,7 @@ class TestRules(unittest.TestCase):
         or the /l/ followed by another consonant (looking to the right
         of the position) then it is a syllable.
         """
-        pass
+        self.assertTrue(syllabifier.Vii_rule("nk", 1))
 
     def test_CV_rule(self):
         """
@@ -156,7 +156,15 @@ class TestRules(unittest.TestCase):
         """
         Test whether the syllabify function works correctly.
         """
-        pass
+        self.assertEqual(syllabifier.syllabify("Nrate"), "N ra te")
+        self.assertEqual(syllabifier.syllabify("Nthate"), "N tha te")
+        self.assertEqual(syllabifier.syllabify("Leakaretsi"), "Le a ka re tsi")
+        self.assertEqual(syllabifier.syllabify("mookotaba"), "mo o ko ta ba")
+        self.assertEqual(syllabifier.syllabify("o"), "o")
+        self.assertEqual(syllabifier.syllabify("nthate"), "n tha te")
+        self.assertEqual(syllabifier.syllabify("nrate"), "n ra te")
+        self.assertEqual(syllabifier.syllabify("nthatisisa"), "n tha ti si sa")
+
 
 
 def main():
