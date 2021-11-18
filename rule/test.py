@@ -82,6 +82,8 @@ class TestRules(unittest.TestCase):
         # if the index is at the beginning of the word (i.e., index =
         # 1)
         self.assertTrue(syllabifier.Vi_rule("abc", 1))
+        self.assertTrue(syllabifier.Vi_rule("aac", 1))
+        self.assertTrue(syllabifier.Vi_rule("aa", 1))
         self.assertFalse(syllabifier.Vi_rule("bbc", 1))
         # if the index is not at the beginning of the word (i.e., index =
         # 1)
@@ -101,12 +103,14 @@ class TestRules(unittest.TestCase):
         # test regular cases
         self.assertTrue(syllabifier.Vii_rule("aac", 2))
         self.assertTrue(syllabifier.Vii_rule("aaac", 3))
+        self.assertFalse(syllabifier.Vii_rule("oe", 1))
         
         # test beginning and middle vowels
         self.assertFalse(syllabifier.Vii_rule("abc", 1))
         self.assertFalse(syllabifier.Vii_rule("aaa", 1))
         self.assertFalse(syllabifier.Vii_rule("aaa", 2))
         self.assertFalse(syllabifier.Vii_rule("aaac", 2))
+        self.assertFalse(syllabifier.Vii_rule("aaaa", 1))
         self.assertFalse(syllabifier.Vii_rule("aaaa", 2))
         self.assertFalse(syllabifier.Vii_rule("aaaa", 3))
 
@@ -143,6 +147,7 @@ class TestRules(unittest.TestCase):
 
         self.assertFalse(syllabifier.CV_rule("abc", 1))
         self.assertFalse(syllabifier.CV_rule("caa", 1))
+        self.assertFalse(syllabifier.CV_rule("caaa", 1))
         self.assertFalse(syllabifier.CV_rule("aabc", 2))
         self.assertFalse(syllabifier.CV_rule("cca", 2))
         self.assertFalse(syllabifier.CV_rule("cca", 3))
@@ -156,11 +161,12 @@ class TestRules(unittest.TestCase):
         """
         Test whether the syllabify function works correctly.
         """
+        self.assertEqual(syllabifier.syllabify("o"), "o")
+        self.assertEqual(syllabifier.syllabify("oe"), "o e")
         self.assertEqual(syllabifier.syllabify("Nrate"), "N ra te")
         self.assertEqual(syllabifier.syllabify("Nthate"), "N tha te")
         self.assertEqual(syllabifier.syllabify("Leakaretsi"), "Le a ka re tsi")
         self.assertEqual(syllabifier.syllabify("mookotaba"), "mo o ko ta ba")
-        self.assertEqual(syllabifier.syllabify("o"), "o")
         self.assertEqual(syllabifier.syllabify("nthate"), "n tha te")
         self.assertEqual(syllabifier.syllabify("nrate"), "n ra te")
         self.assertEqual(syllabifier.syllabify("nthatisisa"), "n tha ti si sa")
