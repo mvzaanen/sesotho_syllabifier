@@ -61,25 +61,36 @@ def V_rule(word, index):
 
 
 def C_rule(word, index):
+    result = False
     # RULE:
     # M and N
     # When followed by another M or N, then the first M is a syllable [mme = m*me, nna = n*na]
     # When followed by other consonant [mphe = m*phe, ntho = n*tho]
     # When followed by the semi-vowels Y and W, then it is NOT a syllable [nwanya = nwa*nya]
+    result = result or (word[index - 1].lower() in "mn" and
+            is_consonant(word[index]) and word[index].lower() not in
+            "wyg")
+
     # The letter L
     # When followed by another L, then the first L is a syllable [lla = l*la]
     # When followed by other consonants, then it is NOT a syllable [tlela = tle*la]
+    result = result or (word[index - 1].lower() == "l" and
+            word[index].lower() == "l")
     # NG and NY
     # When NG is at the end of a word, then it is a syllable [mang*]
     # When followed by the letter W, then it is not a syllable [ngwana = ngwa*na, nwanywetswa = nwa*nywe*tswa]
     # NOTE:
     # NG and NY are not followed by any other consonant, the letter W is actually a semi-vowel.
     # The letter NY cannot be at the end of a word.
+    return result
  
-    # RULE: if we have one of the four nasal consonants or the /l/ followed by another consonant (looking to the right of the position) then it is a syllable
-    if index < 1 or index > len(word) - 1:
-        return False
-    return index > 1 and is_single_nasal_or_l(word[index - 2]) and is_consonant(word[index - 1])
+    # THIS IS THE OLD RULE.  I'm not sure if we need reference to
+    # this, but for now, let's keep it here so we can have an easy
+    # comparison.
+#    # RULE: if we have one of the four nasal consonants or the /l/ followed by another consonant (looking to the right of the position) then it is a syllable
+#    if index < 1 or index > len(word) - 1:
+#        return False
+#    return index > 1 and is_single_nasal_or_l(word[index - 2]) and is_consonant(word[index - 1])
 
 
 def CV_rule(word, index):
@@ -105,7 +116,7 @@ def syllabify(word):
     # index indicates the position between letters, so if the word is abcde,
     # index 1 is between a and b.
     syllabified_word = word[0] # Store the first letter as there is never a syllable boundary before the first letter
-    for index in range(1, len(word) - 1):
+    for index in range(1, len(word)):
         # This tests all the rules in order.  If one of the rules
         # returns true (i.e., matches), then a syllable boundary is
         # found.
@@ -122,7 +133,6 @@ def syllabify(word):
         if v_res or c_res or cv_res:
             syllabified_word += " "
         syllabified_word += word[index]
-    syllabified_word += word[len(word) - 1] # Add last letter
     return syllabified_word
 
 
