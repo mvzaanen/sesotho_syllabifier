@@ -61,6 +61,21 @@ def V_rule(word, index):
 
 
 def C_rule(word, index):
+    # RULE:
+    # M and N
+    # When followed by another M or N, then the first M is a syllable [mme = m*me, nna = n*na]
+    # When followed by other consonant [mphe = m*phe, ntho = n*tho]
+    # When followed by the semi-vowels Y and W, then it is NOT a syllable [nwanya = nwa*nya]
+    # The letter L
+    # When followed by another L, then the first L is a syllable [lla = l*la]
+    # When followed by other consonants, then it is NOT a syllable [tlela = tle*la]
+    # NG and NY
+    # When NG is at the end of a word, then it is a syllable [mang*]
+    # When followed by the letter W, then it is not a syllable [ngwana = ngwa*na, nwanywetswa = nwa*nywe*tswa]
+    # NOTE:
+    # NG and NY are not followed by any other consonant, the letter W is actually a semi-vowel.
+    # The letter NY cannot be at the end of a word.
+ 
     # RULE: if we have one of the four nasal consonants or the /l/ followed by another consonant (looking to the right of the position) then it is a syllable
     if index < 1 or index > len(word) - 1:
         return False
