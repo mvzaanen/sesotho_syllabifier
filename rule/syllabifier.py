@@ -70,7 +70,6 @@ def C_rule(word, index):
     result = result or (word[index - 1].lower() in "mn" and
             is_consonant(word[index]) and word[index].lower() not in
             "wyg")
-
     # The letter L
     # When followed by another L, then the first L is a syllable [lla = l*la]
     # When followed by other consonants, then it is NOT a syllable [tlela = tle*la]
@@ -79,6 +78,7 @@ def C_rule(word, index):
     # NG and NY
     # When NG is at the end of a word, then it is a syllable [mang*]
     # When followed by the letter W, then it is not a syllable [ngwana = ngwa*na, nwanywetswa = nwa*nywe*tswa]
+    result = result or (index > 1 and word[index - 2].lower() == "n" and word[index - 1].lower() == "g" and word[index].lower() == "h")
     # NOTE:
     # NG and NY are not followed by any other consonant, the letter W is actually a semi-vowel.
     # The letter NY cannot be at the end of a word.
