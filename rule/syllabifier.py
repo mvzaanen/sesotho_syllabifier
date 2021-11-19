@@ -3,7 +3,7 @@
 
 This program takes a file containing a list of words (one per line) as
 input.  It writes syllabified versions of the words to output.  The
-syllabification boundaries are indicated by -.
+syllabification boundaries are indicated by spaces.
 """
 
 import argparse
@@ -72,7 +72,7 @@ def C_rule(word, index):
             "wyg")
     # The letter L
     # When followed by another L, then the first L is a syllable [lla = l*la]
-    # When followed by other consonants, then it is NOT a syllable [tlela = tle*la]
+    # When followed by other consonants, then it is NOT a syllable [tlholo = tlho*lo]
     result = result or (word[index - 1].lower() == "l" and
             word[index].lower() == "l")
     # NG and NY
@@ -80,7 +80,8 @@ def C_rule(word, index):
     # When followed by the letter W, then it is not a syllable [ngwana = ngwa*na, nwanywetswa = nwa*nywe*tswa]
     result = result or (index > 1 and word[index - 2].lower() == "n" and word[index - 1].lower() == "g" and word[index].lower() == "h")
     # NOTE:
-    # NG and NY are not followed by any other consonant, the letter W is actually a semi-vowel.
+    # NG can be followed by consonant /h/.
+    # NY is not followed by any other consonant, the letter W is actually a semi-vowel.
     # The letter NY cannot be at the end of a word.
     return result
  
