@@ -78,7 +78,9 @@ def C_rule(word, index):
     # NG and NY
     # When NG is at the end of a word, then it is a syllable [mang*]
     # When followed by the letter W, then it is not a syllable [ngwana = ngwa*na, nwanywetswa = nwa*nywe*tswa]
-    result = result or (index > 1 and word[index - 2].lower() == "n" and word[index - 1].lower() == "g" and word[index].lower() == "h")
+    result = result or (index > 1 and is_complex_nasal(word[index - 2],
+        word[index - 1]) and not (word[index] == "w" or is_vowel(word[index]))
+
     # NOTE:
     # NG can be followed by consonant /h/.
     # NY is not followed by any other consonant, the letter W is actually a semi-vowel.
