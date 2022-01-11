@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # input file
-input_file=dictionary_20211113.txt
+input_file=dictionary_20211129.txt
 input_dir=../data
 # number of parallel processes
 par_proc=8
@@ -13,9 +13,11 @@ if [ ! -e $input_dir/$input_file ]; then
     echo "$input_dir/$input_file does not exist"
     exit
 fi
+dos2unix $input_dir/$input_file
+
 input="${input_file%.txt}"
 splitdir="${input}_splits"
-output="${input}.accuracy"
+output="${input}.accuracy.csv"
 
 mkdir -p ${splitdir}
 
@@ -24,7 +26,7 @@ shuf ${input_dir}/${input_file} \
     | sed "s/-/*/g" \
     > ${splitdir}/${input}.rnd
     #split -d -a ${zeros} -l 1 ${splitdir}/${input}.rnd ${splitdir}/
-split -d -a ${zeros} -n l/${bins} ${splitdir}/${input}.rnd ${splitdir}/
+split -d -a ${zeros} -n r/${bins} ${splitdir}/${input}.rnd ${splitdir}/
 
 let seq_end=${bins}-1;
 ./parallel -j ${par_proc} \
@@ -46,4 +48,17 @@ for fold in `seq -f "%0${zeros}g" 0 ${seq_end}`; do
     let total=`cat ${splitdir}/data${fold}/test.rulesyll | wc -l`
     echo -n "rule,${fold},${error},${total}," >> ${output}
     echo "(${total} - ${error}) / ${total}" | bc -l >> ${output}
+done
+
+# Extract errors
+echo > texsyll.errors
+echo > rulesyll.errors
+for fold in `seq -f "%0${zeros}g" 0 ${seq_end}`; do
+    # Handle texsyll
+    echo "fold ${fold}" >> texsyll.errors
+    diff ${splitdir}/data${fold}/test.gold ${splitdir}/data${fold}/test.texsyll >> texsyll.errors
+
+    # Handle rules
+    echo "fold ${fold}" >> rulesyll.errors
+    diff ${splitdir}/data${fold}/test.gold ${splitdir}/data${fold}/test.rulesyll >> rulesyll.errors
 done
