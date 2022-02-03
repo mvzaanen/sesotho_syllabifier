@@ -1,10 +1,13 @@
 #!/bin/bash
 
-cat dictionary_20201127_syllables.txt \
+arg=$1
+basefile=${arg%.txt}
+
+cat ${basefile}.txt \
     | sed "s/.* //" \
     | sed "s/-/*/g" \
-    > dictionary_20201127_syllables.dict
+    > ${basefile}.dict
 
 ./make_full_patterns.sh \
-    dictionary_20201127_syllables \
+    ${basefile} \
     sesotho.tr
