@@ -1,12 +1,12 @@
 #!/bin/bash
 
 # input file
-input_file=dictionary_20211129.txt
-input_dir=../data
+arg=$1
+input_file=`basename $arg`
+input_dir=`dirname $arg`
 # number of parallel processes
 par_proc=8
 bins=10
-#bins=22041
 zeros=3 # padding zeros
 
 if [ ! -e $input_dir/$input_file ]; then
