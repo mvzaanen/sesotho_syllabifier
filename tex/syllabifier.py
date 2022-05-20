@@ -40,7 +40,6 @@ def main():
         metavar = "FILE")
     parser.add_argument("-p", "--patterns",
         help = "name of patterns file",
-        default = "dictionary_20201127_syllables.pat",
         action = "store",
         metavar = "FILE")
     parser.add_argument("-d", "--debug",
